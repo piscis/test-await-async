@@ -1,7 +1,8 @@
 // POLYFILL
 require('babel-polyfill');
 
-async function publishLevel(userId, levelData) {
+export default async (userId, levelData) => {
+
   const user = await getUser(userId);
   const canCreateRes = await canCreate(user);
 
@@ -12,7 +13,7 @@ async function publishLevel(userId, levelData) {
   const level = await saveLevel(user, levelData);
 
   return level;
-}
+};
 
 function getUser(userId) {
 
@@ -24,39 +25,27 @@ function getUser(userId) {
       });
     }, 100);
   });
-}
+};
 
-function canCreate(user) {
+const canCreate = function(user) {
 
   return new Promise(function(resolve) {
     setTimeout(function() {
       resolve(user.id === 12);
-    }, 1000);
+    }, 100);
   });
-}
+};
 
-function saveLevel(user, data) {
+const saveLevel = function(user, data) {
 
   return new Promise(function(resolve, reject) {
     setTimeout(function() {
-      /*
       resolve({
         id: 100,
         owner: user.nickname,
         data: data
       });
-      */
-      reject('HERE IS THE REJECT');
-    }, 5000);
+
+    }, 100);
   });
-}
-
-console.log('Start request');
-
-publishLevel(12, {data: true}).then(function(levelData) {
-  console.log(levelData);
-}).catch(function(e) {
-  console.log(e);
-});
-
-console.log('finished');
+};
